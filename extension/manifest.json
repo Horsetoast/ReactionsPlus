@@ -1,0 +1,46 @@
+{
+  "name": "ReactionsPlus",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Provides a couple of extra reactions for facebook.",
+  "browser_action": {
+    "default_icon": "images/reactions-plus.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [{
+    "js": [
+      "config/new-reactions.js",
+      "libs/jquery-3.1.1.min.js",
+      "libs/jquery.md5.js",
+      "scripts/modules/reactions-plus.js",
+      "scripts/modules/fb-post.js",
+      "scripts/content.js"
+    ],
+    "css": ["styles/styles.css"],
+    "matches": ["https://*/*"]
+  }],
+  "icons": {
+    "16": "images/reactions-plus-16.png",
+    "128": "images/reactions-plus.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "config/config.js",
+      "libs/jquery-3.1.1.min.js",
+      "scripts/modules/fb-connect.js",
+      "scripts/background.js"
+    ],
+    "persistent": false
+  },
+  "permissions": [
+    "tabs", "activeTab", "http://localhost/*", "notifications", "storage"
+  ],
+  "externally_connectable": {
+    "matches": ["http://localhost:3000/*"]
+  },
+  "web_accessible_resources": [
+    "images/*.png",
+    "styles/*.css"
+  ]
+}

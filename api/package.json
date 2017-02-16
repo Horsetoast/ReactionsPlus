@@ -1,0 +1,19 @@
+{
+  "name": "ReactionsPlus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matus Peciar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "https": "^1.0.0",
+    "jsonwebtoken": "^7.2.1",
+    "mysql": "^2.12.0"
+  }
+}
