@@ -35,7 +35,7 @@ app.get('/facebook-login', function(req, res) {
       res.status(500).send(err);
       return;
     }
-    res.redirect(config.fb.successUrl+jwtToken); // this token should be our generated token
+    res.redirect(config.fb.successUrl+jwtToken);
   });
 });
 

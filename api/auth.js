@@ -75,28 +75,6 @@ module.exports = (function(config) {
       }
       callback(null, decoded);
     });
-    // var options = {
-    //   hostname: config.fb.graphHost,
-    //   port: 443,
-    //   path: config.fb.profilePath + userToken,
-    //   method: 'GET'
-    // };
-    // var req = https.request(options, function(res) {
-    //   res.setEncoding('utf8');
-    //   res.on('data', function (chunk) {
-    //     var userId = JSON.parse(chunk).id;
-    //     if(typeof userId === 'undefined') {
-    //       callback('User logged out');
-    //     }
-    //     else {
-    //       callback(null, userId);
-    //     }
-    //   });
-    // });
-    // req.end();
-    // req.on('error', function(err) {
-    //   callback('Unable to verify user');
-    // });
   }
 
   return {
