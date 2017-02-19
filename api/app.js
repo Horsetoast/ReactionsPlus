@@ -20,6 +20,10 @@ app.use(function (req, res, next) {
   next();
 })
 
+postManager.getPostReactions('1as3d54wq', '65432115', function(err, response) {
+  console.log(err, response);
+});
+
 app.get('/', function(req, res) {
   res.send('Facebook Reactions Extended API');
 });
