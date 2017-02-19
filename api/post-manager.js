@@ -2,15 +2,31 @@ var config = require('./config.js');
 var auth = require('./auth.js');
 var mysql = require('mysql');
 
-module.exports = function(config) {
-  var connection = mysql.createConnection(config.db);
-  connection.connect(function(err) {
-    if (err) {
-      console.error('Error connecting: ' + err.stack);
-      return;
+var connection;
+
+function handleDisconnect() {
+  connection = mysql.createConnection(config.db); // Recreate the connection, since                                                // the old one cannot be reused.
+
+  connection.connect(function(err) {              // The server is either down
+    if(err) {                                     // or restarting (takes a while sometimes).
+      console.log('error when connecting to db:', err);
+      setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+    }                                     // to avoid a hot loop, and to allow our node script to
+  });                                     // process asynchronous requests in the meantime.
+                                          // If you're also serving http, display a 503 error.
+  connection.on('error', function(err) {
+    console.log('db error', err);
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+      handleDisconnect();                         // lost due to either server restart, or a
+    } else {                                      // connnection idle timeout (the wait_timeout
+      throw err;                                  // server variable configures this)
     }
-    console.log('Connected as ID ' + connection.threadId);
   });
+}
+
+handleDisconnect();
+
+module.exports = function(config, connection) {
 
   var getPostReactions = function(postId, userId, callback) {
     connection.query('SELECT reaction_id, user_id, COUNT(reaction_id) AS total FROM posts WHERE post_id = ? GROUP BY reaction_id', [postId], function(err, results) {
@@ -76,4 +92,4 @@ module.exports = function(config) {
     insertOrUpdatePost: insertOrUpdatePost,
     deletePostReaction: deletePostReaction
   }
-}(config);
+}(config, connection);
