@@ -2,13 +2,13 @@
   background-position: 0 0;
 }
 .hoax-emoji {
-  background-position: 0 -50px;
+  background-position: 0 -48px;
 }
 .fer-mini-reaction.clickbait-emoji {
   background-position: 0 0;
 }
 .fer-mini-reaction.hoax-emoji {
-  background-position: 0 -14px;
+  background-position: 0 -13px;
 }
 .reacted-icon.clickbait-emoji {
   background-position: 0 0;
@@ -21,7 +21,7 @@
 }
 .fer-normal-reaction {
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: 100%;
   transform: none;
   display: block;
   line-height: 1;
@@ -43,8 +43,8 @@
 .fer-mini-reaction {
   display: block;
   position: absolute;
-  height: 14px;
-  width: 14px;
+  height: 13px;
+  width: 13px;
   transform: none;
   left: 0;
   background-size: 100%;

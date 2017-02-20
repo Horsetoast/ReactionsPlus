@@ -8,7 +8,7 @@ var $countPopup = $('<div class="count-popup"><span class="reaction-title">Click
 $countPopup.css({'display': 'none'});
 $('body').append($countPopup);
 
-var content = {
+var context = {
   extendedPosts: {},
   logged: false
 }
@@ -20,11 +20,11 @@ chrome.runtime.sendMessage({
   action: 'check_logged'
 }, function(response) {
   if (typeof response.logged !== 'undefined' && response.logged === true) {
-    console.info('Successfully logged in to ReactionsPlus extension.');
-    content.logged = true;
+    console.info('You are logged in to ReactionsPlus extension.');
+    context.logged = true;
   }
   else {
-    console.info('You are log out of ReactionsPlus extension.');
+    console.info('You are logged out of ReactionsPlus extension.');
   }
 });
 
@@ -38,7 +38,7 @@ chrome.runtime.sendMessage({
   $('._1oxk').not('.extended').each(function() {
     processReactions(this);
   });
-  $('.commentable_item:not(.processed)').find('._khz a:not(.processed)').each(function() {
+  $('.commentable_item:not(.processed)').find('._khz a').each(function() {
     processLikeButton(this);
   });
   setTimeout(checkDOM, 500);
@@ -51,12 +51,16 @@ chrome.runtime.sendMessage({
  */
 chrome.runtime.onMessage.addListener(function(request, sender, callback) {
   if (request.action == 'logout') {
-    content.logged = false;
+    context.logged = false;
     callback(null);
   }
   if (request.action == 'login') {
-    content.logged = true;
+    context.logged = true;
     callback(null);
+  }
+  if (request.action == 'debug') {
+    callback(null);
+    console.log(context);
   }
 });
 
@@ -70,13 +74,19 @@ function processLikeButton(likeButton) {
   var $form = $(likeButton).closest('.commentable_item');
   var postId = $form.find('[name="ft_ent_identifier"]').val();
   var postHash = $.md5(postId);
-  var fbPost = new FBPost(postHash, content);
-  fbPost.bindLikeButton($likeButton);
-  fbPost.bindCountPopup($countPopup);
+  if(context.extendedPosts[postHash]) {
+    context.extendedPosts[postHash].bindLikeButton($likeButton);
+    context.extendedPosts[postHash].bindCountPopup($countPopup);
+  }
+  else {
+    var fbPost = new FBPost(postHash, context);
+    fbPost.bindLikeButton($likeButton);
+    fbPost.bindCountPopup($countPopup);
+    context.extendedPosts[postHash] = fbPost;
+  }
   $form.addClass('processed');
-  content.extendedPosts[postHash] = fbPost;
 
-  return content.extendedPosts[postHash];
+  return context.extendedPosts[postHash];
 }
 
 
@@ -85,9 +95,9 @@ function processReactions(reactionsDiv) {
   var $form = $(reactionsDiv).closest('.commentable_item');
   var postId = $form.find('[name="ft_ent_identifier"]').val();
   var postHash = $.md5(postId);
-  if (typeof content.extendedPosts[postHash] !== 'undefined') {
-    content.extendedPosts[postHash].bindReactions($reactions);
+  if (typeof context.extendedPosts[postHash] !== 'undefined') {
+    context.extendedPosts[postHash].bindReactions($reactions);
   }
 
-  return content.extendedPosts[postHash];
+  return context.extendedPosts[postHash];
 }

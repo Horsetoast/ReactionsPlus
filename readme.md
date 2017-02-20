@@ -14,6 +14,9 @@
 
 ### TO-DO
 
- * Reaction count doesn't show if a Facebook post doesn't have any likes, thus doesn't have a div for storing the icons
+ * Reaction count doesn't show if a Facebook post doesn't have any likes = doesn't have a div for storing the icons
  * Refactor and optimize FBPost module
  * Dynamic update of reactions count on hover over the icons
+ * Instant change of icons after a reaction is clicked (and wait for a response, if an error is received rollback the reaction click)
+ * Consider using sockets
+ * Design interface and write better messages

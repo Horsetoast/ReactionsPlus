@@ -34,6 +34,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback) {
     callback();
     return true;
   }
+  if (request.action == 'debug') {
+    chrome.tabs.query({active: true}, function(tabs) {
+      for (var i = 0; i < tabs.length; ++i) {
+        chrome.tabs.sendMessage(tabs[i].id, {
+          action: 'debug'
+        });
+      }
+    });
+    callback();
+    return true;
+  }
   if (request.action == 'xhttp') {
     var xhttp = new XMLHttpRequest();
     var method = request.method ? request.method.toUpperCase() : 'GET';
