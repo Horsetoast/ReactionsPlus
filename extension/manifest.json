@@ -1,6 +1,6 @@
 {
   "name": "ReactionsPlus",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "manifest_version": 2,
   "description": "Provides a couple of extra reactions for facebook.",
   "browser_action": {
@@ -17,7 +17,10 @@
       "scripts/content.js"
     ],
     "css": ["styles/styles.css"],
-    "matches": ["https://*/*"]
+    "matches": [
+      "http://facebook.com/*",
+      "https://facebook.com/*"
+    ]
   }],
   "icons": {
     "16": "images/reactions-plus-16.png",
@@ -34,11 +37,8 @@
     "persistent": false
   },
   "permissions": [
-    "tabs", "activeTab", "http://localhost/*", "notifications", "storage"
+    "tabs", "activeTab", "https://rpcextension.herokuapp.com/*", "notifications", "storage"
   ],
-  "externally_connectable": {
-    "matches": ["http://localhost:3000/*"]
-  },
   "web_accessible_resources": [
     "images/*.png",
     "styles/*.css"

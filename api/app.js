@@ -3,6 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var https = require('https');
+require('dotenv').config();
 
 // Config and custom modules for working with Facebook API and MySQL
 var config = require('./config');
@@ -33,6 +34,9 @@ app.get('/login-success', function(req, res) {
 });
 
 app.get('/facebook-login', function(req, res) {
+  if(!req.query.code) {
+    res.status(500).send({error: 'Code not provided.'});
+  }
   auth.exchangeCodeForJwtToken(req.query.code, function(err, jwtToken) {
     if(err) {
       console.log(err);
