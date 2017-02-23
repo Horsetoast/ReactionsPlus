@@ -18,6 +18,8 @@
     ],
     "css": ["styles/styles.css"],
     "matches": [
+      "http://www.facebook.com/*",
+      "https://www.facebook.com/*",
       "http://facebook.com/*",
       "https://facebook.com/*"
     ]
@@ -37,7 +39,7 @@
     "persistent": false
   },
   "permissions": [
-    "tabs", "activeTab", "https://rpcextension.herokuapp.com/*", "notifications", "storage"
+    "tabs", "activeTab", "https://matus-rpce.herokuapp.com/*", "notifications", "storage"
   ],
   "web_accessible_resources": [
     "images/*.png",
