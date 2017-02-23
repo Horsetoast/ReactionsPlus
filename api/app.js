@@ -34,8 +34,9 @@ app.get('/login-success', function(req, res) {
 });
 
 app.get('/facebook-login', function(req, res) {
-  if(!req.query.code) {
+  if(typeof req.query.code === 'undefined') {
     res.status(500).send({error: 'Code not provided.'});
+    return;
   }
   auth.exchangeCodeForJwtToken(req.query.code, function(err, jwtToken) {
     if(err) {
